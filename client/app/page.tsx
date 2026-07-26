@@ -1,20 +1,22 @@
 "use client";
 
-import { useEffect } from "react";
-import { socket } from "@/lib/socket";
+import { useState } from "react";
+import JoinForm from "@/components/JoinForm";
 
 export default function Home() {
-  useEffect(() => {
-    socket.connect();
+  const [username, setUsername] = useState<string | null>(null);
 
-    socket.on("connect", () => {
-      console.log("✅ Connected to server:", socket.id);
-    });
+  const handleJoin = (name: string) => {
+    setUsername(name);
+  };
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  return <div>Check your browser console</div>;
+  return (
+    <main>
+      {username ? (
+        <div>Welcome, {username}!  </div>
+      ) : (
+        <JoinForm onJoin={handleJoin} />
+      )}
+    </main>
+  );
 }
