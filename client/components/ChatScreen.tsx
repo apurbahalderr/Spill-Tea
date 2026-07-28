@@ -1,7 +1,7 @@
 "use client"
 import {useState , useEffect} from 'react'
 import {socket} from '@/lib/socket'
-import { Message } from '@/types/chat'
+import { ChatEvent, ChatMessage } from '@/types/chat'
 import MessageList from './MessageList'
 import ChatInput from './ChatInput'
 
@@ -10,9 +10,9 @@ interface ChatScreenProps {
 }
 
 export default function ChatScreen({username}: ChatScreenProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<ChatEvent[]>([]);
 useEffect(()=>{
-socket.on("receive-message", (message: Message)=>{
+socket.on("receive-message", (message: ChatMessage)=>{
    setMessages((prev) => [...prev, message]);
   })
   return () => {
@@ -20,7 +20,8 @@ socket.on("receive-message", (message: Message)=>{
   }
 },[])
 function handleSendMessage(message: string){
-  const newMessage : Message = {
+  const newMessage : ChatMessage = {
+    type: "message",
     id: crypto.randomUUID(),
     username: username,
     text: message,

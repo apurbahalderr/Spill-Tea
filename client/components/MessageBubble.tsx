@@ -1,7 +1,7 @@
 import React from 'react'
-import { Message } from '@/types/chat';
+import { ChatMessage } from '@/types/chat';
 interface MessageBubbleProps {
-  message: Message;
+  message: ChatMessage;
   isOwnMessage: boolean;
 }
 export default function MessageBubble({message, isOwnMessage}: MessageBubbleProps ) {
