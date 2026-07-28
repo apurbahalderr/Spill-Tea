@@ -33,7 +33,7 @@ function handleSendMessage(message: string){
 
 
   return (
-    <div className="flex flex-col h-screen w-full">
+    <div className="flex flex-col h-screen w-full bg-white dark:bg-gray-900">
     <div className="flex-1 overflow-y-auto">
       <MessageList messages={messages} currentUsername={username} />
     </div>
