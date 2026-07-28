@@ -2,6 +2,7 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
+import { Message } from "./types/chat";
 
 const app = express();
 app.use(cors());
@@ -20,6 +21,10 @@ io.on("connection", (socket) => {
 
   socket.on("join", (username: string) => {
     console.log(`👤 ${username} joined (socket: ${socket.id})`);
+  });
+  socket.on("send-message", (message: Message) => {
+    console.log(`💬 ${message.username}: ${message.text}`);
+    io.emit("receive-message", message);
   });
 
   socket.on("disconnect", () => {
