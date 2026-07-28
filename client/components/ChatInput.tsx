@@ -16,7 +16,6 @@ export default function ChatInput({ onSend }: ChatInputProps) {
       setInputValue("");
     }
   };
-
   return (
     <form
       onSubmit={(e) => {

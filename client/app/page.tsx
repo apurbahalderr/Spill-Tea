@@ -3,6 +3,7 @@
 import { useState } from "react";
 import JoinForm from "@/components/JoinForm";
 import {socket} from "@/lib/socket";
+import ChatScreen from "@/components/ChatScreen";
 
 export default function Home() {
   const [username, setUsername] = useState<string | null>(null);
@@ -16,7 +17,7 @@ export default function Home() {
   return (
     <main>
       {username ? (
-        <div>Welcome, {username}!  </div>
+        <ChatScreen username={username} />
       ) : (
         <JoinForm onJoin={handleJoin} />
       )}
