@@ -1,13 +1,16 @@
 "use client";
-import React from "react";
+import { useRef , useEffect} from "react";
+import { socket } from "@/lib/socket";
 import { useState } from "react";
 
 interface ChatInputProps {
   onSend: (text: string) => void;
+  username: string;
 }
 
-export default function ChatInput({ onSend }: ChatInputProps) {
+export default function ChatInput({ onSend, username }: ChatInputProps) {
   const [inputValue, setInputValue] = useState("");
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleSendMessage = () => {
     const trimmed = inputValue.trim();
@@ -16,6 +19,14 @@ export default function ChatInput({ onSend }: ChatInputProps) {
       setInputValue("");
     }
   };
+useEffect(() => {
+  return () => {
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
+  };
+}, []);
+
   return (
     <form
       onSubmit={(e) => {
@@ -27,7 +38,14 @@ export default function ChatInput({ onSend }: ChatInputProps) {
       <input
         type="text"
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          socket.emit("typing", username);
+          if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+          typingTimeoutRef.current = setTimeout(() => {
+            socket.emit("stop-typing", username);
+          }, 2000);
+        }}
         placeholder="Type a message..."
         className="bg-gray-100 text-gray-800 placeholder:text-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 px-3"
       />

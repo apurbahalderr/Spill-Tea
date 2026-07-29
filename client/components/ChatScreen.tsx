@@ -64,7 +64,7 @@ export default function ChatScreen({ username }: ChatScreenProps) {
           <div className="flex-1 overflow-y-auto">
             <MessageList messages={messages} currentUsername={username} />
           </div>
-          <ChatInput onSend={handleSendMessage} />
+          <ChatInput onSend={handleSendMessage} username ={username}/>
         </div>
       </div>
     </div>
