@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import JoinForm from "@/components/JoinForm";
-import {socket} from "@/lib/socket";
+import { socket } from "@/lib/socket";
 import ChatScreen from "@/components/ChatScreen";
 
 export default function Home() {

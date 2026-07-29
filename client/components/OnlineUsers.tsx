@@ -17,5 +17,5 @@ export default function OnlineUsers({ users }: OnlineUsersProps) {
         ))}
       </ul>
     </div>
-  )
+  );
 }

@@ -1,15 +1,18 @@
-"use client"
-import { useEffect, useRef } from 'react'
-import { ChatEvent } from '@/types/chat'
-import MessageBubble from './MessageBubble';
-import SystemMessageBubble from './SystemMessageBubble';
+"use client";
+import { useEffect, useRef } from "react";
+import { ChatEvent } from "@/types/chat";
+import MessageBubble from "./MessageBubble";
+import SystemMessageBubble from "./SystemMessageBubble";
 
 interface MessageListProps {
   messages: ChatEvent[];
   currentUsername: string;
 }
 
-export default function MessageList({ messages, currentUsername }: MessageListProps) {
+export default function MessageList({
+  messages,
+  currentUsername,
+}: MessageListProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,7 +30,7 @@ export default function MessageList({ messages, currentUsername }: MessageListPr
           />
         ) : (
           <SystemMessageBubble key={event.id} message={event} />
-        )
+        ),
       )}
       <div ref={bottomRef} />
     </div>
