@@ -30,7 +30,7 @@ function JoinForm({ onJoin }: JoinFormProps) {
             Spill Tea <span className="inline-block rotate-12">☕</span>
           </h1>
 
-          <div className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white">
+          <div className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white hover:shadow-lg transition-transform hover:scale-[1.02]">
             👤
           </div>
         </div>
@@ -42,7 +42,7 @@ function JoinForm({ onJoin }: JoinFormProps) {
         {/* Left Side */}
         <div className="max-w-xl">
 
-          <div className="inline-flex items-center gap-2 rounded-full border border-purple-200 bg-purple-50 px-4 py-1.5 text-sm font-medium text-purple-600">
+          <div className="inline-flex items-center gap-2 rounded-full border border-purple-200 bg-purple-50 px-4 py-1.5 text-sm font-medium text-purple-600 hover:shadow-lg transition-transform hover:scale-[1.02]">
             <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
             People are chatting right now
           </div>
@@ -65,28 +65,28 @@ function JoinForm({ onJoin }: JoinFormProps) {
           {/* Feature Cards */}
           <div className="mt-8 grid grid-cols-2 gap-4">
 
-            <div className="rounded-2xl border border-l-4 border-l-purple-400 bg-purple-50/40 p-5 shadow-sm">
+            <div className="rounded-2xl border border-l-4 border-l-purple-400 bg-purple-50/40 p-5 shadow-sm hover:shadow-lg transition-transform hover:scale-[1.02]">
               <h3 className="font-semibold text-black">🎭 Anonymous</h3>
               <p className="mt-2 text-sm text-gray-500">
                 Your identity stays private.
               </p>
             </div>
 
-            <div className="rounded-2xl border bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border bg-white p-5 shadow-sm hover:shadow-lg transition-transform hover:scale-[1.02]">
               <h3 className="font-semibold text-black">⚡ Instant</h3>
               <p className="mt-2 text-sm text-gray-500">
                 Join and start chatting.
               </p>
             </div>
 
-            <div className="rounded-2xl border bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border bg-white p-5 shadow-sm hover:shadow-lg transition-transform hover:scale-[1.02]">
               <h3 className="font-semibold text-black">💬 Real People</h3>
               <p className="mt-2 text-sm text-gray-500">
                 No bots. Just conversations.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-l-4 border-l-purple-400 bg-purple-50/40 p-5 shadow-sm">
+            <div className="rounded-2xl border border-l-4 border-l-purple-400 bg-purple-50/40 p-5 shadow-sm hover:shadow-lg transition-transform hover:scale-[1.02]">
               <h3 className="font-semibold text-black">❤️ No Judgement</h3>
               <p className="mt-2 text-sm text-gray-500">
                 Say what's on your mind.
@@ -98,7 +98,7 @@ function JoinForm({ onJoin }: JoinFormProps) {
         </div>
 
         {/* Right Side */}
-        <div className="w-full max-w-md rounded-3xl border border-purple-100 bg-white p-10 shadow-2xl shadow-purple-100">
+        <div className="w-full max-w-md rounded-3xl border border-purple-100 bg-white p-10 shadow-2xl shadow-purple-100 hover:shadow-lg transition-transform hover:scale-[1.02] border-t-4 border-t-purple-400 border-b-4 border-b-purple-400">
 
           <div className="mb-8 text-center">
             <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100 text-3xl">
