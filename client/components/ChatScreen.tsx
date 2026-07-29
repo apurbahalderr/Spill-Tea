@@ -11,12 +11,17 @@ interface ChatScreenProps {
 
 export default function ChatScreen({username}: ChatScreenProps) {
   const [messages, setMessages] = useState<ChatEvent[]>([]);
+  const [onlineUsers,setOnlineUsers] = useState<string[]>([]);
 useEffect(()=>{
-socket.on("receive-message", (message: ChatMessage)=>{
+    socket.on("receive-message", (message: ChatMessage)=>{
    setMessages((prev) => [...prev, message]);
   })
+  socket.on("online-users", (users: string[]) => {
+    setOnlineUsers(users);
+  });
   return () => {
     socket.off("receive-message");
+    socket.off("online-users");
   }
 },[])
 function handleSendMessage(message: string){

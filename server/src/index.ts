@@ -16,6 +16,10 @@ const io = new Server(httpServer, {
   },
 });
 const connectedUsers = new Map<string, string>();
+function broadcastOnlineUsers() {
+  const usernames = Array.from(connectedUsers.values());
+  io.emit("online-users", usernames);
+}
 
 io.on("connection", (socket) => {
   console.log(`✅ Client connected: ${socket.id}`);
@@ -31,6 +35,7 @@ io.on("connection", (socket) => {
       timestamp: Date.now(),
     };
     io.emit("receive-message", systemMessage);
+    broadcastOnlineUsers();
   });
 
   socket.on("send-message", (message: ChatMessage) => {
@@ -51,6 +56,7 @@ io.on("connection", (socket) => {
         timestamp: Date.now(),
       };
       io.emit("receive-message", systemMessage);
+      broadcastOnlineUsers();
     }
   });
 });
