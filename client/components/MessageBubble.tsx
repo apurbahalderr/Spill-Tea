@@ -1,4 +1,4 @@
-import React from "react";
+
 import { ChatMessage } from "@/types/chat";
 interface MessageBubbleProps {
   message: ChatMessage;
