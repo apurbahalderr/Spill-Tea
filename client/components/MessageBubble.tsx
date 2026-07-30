@@ -20,7 +20,7 @@ export default function MessageBubble({
         <span className="text-xs text-gray-500 mb-1">{message.username}</span>
       )}
       <div
-        className={`px-4 py-2 rounded-lg ${isOwnMessage ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}
+        className={`px-4 py-2 rounded-lg ${isOwnMessage ? "bg-purple-500 text-white" : "bg-gray-200 text-gray-800"}`}
       >
         <p>{message.text}</p>
       </div>

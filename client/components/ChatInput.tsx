@@ -47,11 +47,11 @@ useEffect(() => {
           }, 2000);
         }}
         placeholder="Type a message..."
-        className="bg-gray-100 text-gray-800 placeholder:text-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 px-3"
+        className="bg-gray-100 text-gray-800 placeholder:text-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 flex-1 px-3"
       />
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
       >
         Send
       </button>

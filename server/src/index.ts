@@ -37,6 +37,12 @@ io.on("connection", (socket) => {
     io.emit("receive-message", systemMessage);
     broadcastOnlineUsers();
   });
+  socket.on("typing", (username: string) => {
+    socket.broadcast.emit("typing", username);
+  });
+  socket.on("stop-typing", (username: string) => {
+    socket.broadcast.emit("stop-typing", username);
+  });
 
   socket.on("send-message", (message: ChatMessage) => {
     console.log(`💬 ${message.username}: ${message.text}`);
