@@ -22,6 +22,7 @@ export default function ChatScreen({ username }: ChatScreenProps) {
     socket.on("online-users", (users: string[]) => {
       setOnlineUsers(users);
     });
+    socket.emit("get-online-users");
     socket.on("typing", (username: string) => setTypingUser(username));
     socket.on("stop-typing", () => setTypingUser(null));
     return () => {

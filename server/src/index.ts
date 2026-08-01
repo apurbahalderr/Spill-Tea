@@ -57,7 +57,13 @@ io.on("connection", (socket) => {
     socketToRoom.set(socket.id, roomCode);
     console.log(`🆕 Room created: ${roomCode} by ${username}`);
     socket.emit("room-created", roomCode);
-    socket.to(roomCode).emit("user-joined-room", username);
+    const joinMessage: SystemMessage = {
+      type: "system",
+      id: crypto.randomUUID(),
+      text: `🟢 ${username} joined the room`,
+      timestamp: Date.now(),
+    };
+    socket.to(roomCode).emit("receive-message", joinMessage);
     broadcastOnlineUsers(roomCode);
   });
   socket.on(
@@ -67,9 +73,16 @@ io.on("connection", (socket) => {
       if (room) {
         room.users.set(socket.id, username);
         socket.join(roomCode);
+        socketToRoom.set(socket.id, roomCode);
         console.log(`🔑 ${username} joined room: ${roomCode}`);
         socket.emit("room-joined", roomCode);
-        socket.to(roomCode).emit("user-joined-room", username);
+        const joinMessage: SystemMessage = {
+          type: "system",
+          id: crypto.randomUUID(),
+          text: `🟢 ${username} joined the room`,
+          timestamp: Date.now(),
+        };
+        socket.to(roomCode).emit("receive-message", joinMessage);
         broadcastOnlineUsers(roomCode);
       } else {
         console.log(`❌ Room not found: ${roomCode}`);
@@ -77,6 +90,11 @@ io.on("connection", (socket) => {
       }
     },
   );
+  socket.on("get-online-users", () => {
+    const roomCode = socketToRoom.get(socket.id);
+    if (!roomCode) return;
+    broadcastOnlineUsers(roomCode);
+  });
 
   socket.on("send-message", (message: ChatMessage) => {
     const roomCode = socketToRoom.get(socket.id);
@@ -108,6 +126,10 @@ io.on("connection", (socket) => {
       };
       io.to(roomCode).emit("receive-message", systemMessage);
       broadcastOnlineUsers(roomCode);
+    }
+    if (room.users.size === 0) {
+      rooms.delete(roomCode);
+      console.log(`🗑️ Room ${roomCode} deleted (empty)`);
     }
   });
 });
