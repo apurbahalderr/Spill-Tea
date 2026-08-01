@@ -18,10 +18,15 @@ export default function ChatScreen({ username, roomCode }: ChatScreenProps) {
   const [typingUser, setTypingUser] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const handleCopyCode = async () => {
-  await navigator.clipboard.writeText(roomCode);
-  setCopied(true);
-  setTimeout(() => setCopied(false), 1500);
-};
+    await navigator.clipboard.writeText(roomCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setIsSidebarOpen(false);
+    }
+  }, []);
   useEffect(() => {
     socket.on("receive-message", (message: ChatMessage) => {
       setMessages((prev) => [...prev, message]);
@@ -75,9 +80,20 @@ export default function ChatScreen({ username, roomCode }: ChatScreenProps) {
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden relative">
+        {isSidebarOpen && (
+          <div
+            onClick={() => setIsSidebarOpen(false)}
+            className="absolute inset-0 bg-black/30 z-10 md:hidden"
+          />
+        )}
         <div
-          className={`overflow-hidden transition-all duration-300 ${isSidebarOpen ? "w-56" : "w-0"}`}
+          className={`
+      overflow-hidden transition-all duration-300 z-20
+      absolute md:relative
+      top-0 left-0 h-full
+      ${isSidebarOpen ? "w-56" : "w-0"}
+    `}
         >
           <OnlineUsers users={onlineUsers} />
         </div>
