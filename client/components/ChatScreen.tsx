@@ -8,13 +8,20 @@ import OnlineUsers from "@/components/OnlineUsers";
 
 interface ChatScreenProps {
   username: string;
+  roomCode: string;
 }
 
-export default function ChatScreen({ username }: ChatScreenProps) {
+export default function ChatScreen({ username, roomCode }: ChatScreenProps) {
   const [messages, setMessages] = useState<ChatEvent[]>([]);
   const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [typingUser, setTypingUser] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const handleCopyCode = async () => {
+  await navigator.clipboard.writeText(roomCode);
+  setCopied(true);
+  setTimeout(() => setCopied(false), 1500);
+};
   useEffect(() => {
     socket.on("receive-message", (message: ChatMessage) => {
       setMessages((prev) => [...prev, message]);
@@ -45,18 +52,27 @@ export default function ChatScreen({ username }: ChatScreenProps) {
 
   return (
     <div className="flex flex-col h-screen w-full bg-linear-to-b from-purple-50/60 via-white to-white">
-    <header className="px-4 py-3 border-b border-gray-300 bg-white flex items-center justify-between">
+      <header className="px-4 py-3 border-b border-gray-300 bg-white flex items-center justify-between">
         <h1 className="flex items-center gap-2 text-3xl font-black text-black tracking-tight">
           Spill Tea <span className="inline-block rotate-12">☕</span>
         </h1>
 
-        <button
-          onClick={() => setIsSidebarOpen((prev) => !prev)}
-          className="flex items-center gap-2 text-sm font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 px-3 py-1.5 rounded-full border border-purple-100 transition"
-        >
-          <span className="h-2 w-2 rounded-full bg-green-500" />
-          {isSidebarOpen ? "Hide Online Users" : "Show Online Users"}
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={handleCopyCode}
+            className="flex items-center gap-2 text-sm font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 px-3 py-1.5 rounded-full border border-purple-100 transition"
+          >
+            <span className="h-2 w-2 rounded-full bg-green-500" />
+            {copied ? "✓ Copied!" : `Room: ${roomCode}`}
+          </button>
+          <button
+            onClick={() => setIsSidebarOpen((prev) => !prev)}
+            className="flex items-center gap-2 text-sm font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 px-3 py-1.5 rounded-full border border-purple-100 transition"
+          >
+            <span className="h-2 w-2 rounded-full bg-green-500" />
+            {isSidebarOpen ? "Hide Online Users" : "Show Online Users"}
+          </button>
+        </div>
       </header>
 
       <div className="flex flex-1 overflow-hidden">
