@@ -4,8 +4,9 @@ Real-time anonymous chat rooms — built with Socket.IO, Next.js 15, and TypeScr
 
 **🔗 Live demo:** [spill-tea-woad.vercel.app](https://spill-tea-woad.vercel.app/)
 
-![Spill Tea screenshot](./screenshot.png)
-
+![Join screen](./screenshots/joinChat.png)
+![Lobby screen](./screenshots/lobbyScreen.png)
+![Chat screen](./screenshots/chatScreen.png)
 ---
 
 ## What is this?
