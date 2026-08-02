@@ -143,6 +143,14 @@ These were deliberately left out of scope to keep the focus on real-time systems
 
 ---
 
+## 👤 Author
+
+**Apurba Halder**
+- GitHub: [@apurbahalderr](https://github.com/apurbahalderr)
+- LinkedIn: [Apurba Halder](https://www.linkedin.com/in/apurba-halder-457a81319/)
+
+---
+
 ## 📄 License
 
 MIT — see [LICENSE](./LICENSE) for details.
