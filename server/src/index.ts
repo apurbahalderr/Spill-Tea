@@ -14,6 +14,8 @@ const io = new Server(httpServer, {
     origin: process.env.CLIENT_URL || "http://localhost:3000",
     methods: ["GET", "POST"],
   },
+  pingInterval: 10000,
+  pingTimeout: 5000,
 });
 interface Room {
   users: Map<string, string>;
