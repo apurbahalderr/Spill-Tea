@@ -11,10 +11,18 @@ interface LobbyProps {
 export default function Lobby({ username, onRoomReady }: LobbyProps) {
   const [joinCode, setJoinCode] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
+  const [isJoining, setIsJoining] = useState(false);
+  const [showSlowNotice, setShowSlowNotice] = useState(false);
   const handleCreateRoom = () => {
+    setIsCreating(true);
+    const slowTimer = setTimeout(() => setShowSlowNotice(true), 5000);
     socket.emit("create-room", username);
     socket.once("room-created", (code: string) => {
+      clearTimeout(slowTimer);
+      setShowSlowNotice(false);
       onRoomReady(code);
+      setIsCreating(false);
     });
   };
   const handleJoinRoom = () => {
@@ -22,14 +30,22 @@ export default function Lobby({ username, onRoomReady }: LobbyProps) {
     if (!trimmedCode) return;
 
     setError(null);
+    setIsJoining(true);
+    const slowTimer = setTimeout(() => setShowSlowNotice(true), 5000);
     socket.emit("join-room", { roomCode: trimmedCode, username });
 
     socket.once("room-joined", (code: string) => {
       onRoomReady(code);
+      setIsJoining(false);
+      clearTimeout(slowTimer);
+      setShowSlowNotice(false);
     });
 
     socket.once("room-not-found", () => {
       setError("Room not found. Check the code and try again.");
+      setIsJoining(false);
+      clearTimeout(slowTimer);
+      setShowSlowNotice(false);
     });
   };
 
@@ -91,9 +107,16 @@ export default function Lobby({ username, onRoomReady }: LobbyProps) {
               from-violet-500 to-indigo-500 py-4 text-lg font-semibold
               text-white transition hover:scale-[1.02]"
               onClick={handleCreateRoom}
+              disabled={isCreating}
             >
-              ✨ Create Room
+              {isCreating ? "Creating..." : "✨ Create Room"}
             </button>
+            {showSlowNotice && (
+              <p className="mt-3 text-center text-sm text-gray-500">
+                Waking up the server — this can take up to a minute on first
+                load.
+              </p>
+            )}
           </div>
 
           {/* Join Room */}
@@ -123,7 +146,7 @@ export default function Lobby({ username, onRoomReady }: LobbyProps) {
                 placeholder="Enter room code"
                 className="w-full rounded-2xl border border-gray-200 py-4 pl-14 pr-5 text-lg outline-none transition focus:border-violet-500 focus:ring-4 focus:ring-violet-100"
               />
-                {error && <p className="text-sm text-red-500">{error}</p>}
+              {error && <p className="text-sm text-red-500">{error}</p>}
             </div>
 
             <button
@@ -131,9 +154,16 @@ export default function Lobby({ username, onRoomReady }: LobbyProps) {
               from-violet-500 to-indigo-500 py-4 text-lg font-semibold
               text-white transition hover:scale-[1.02]"
               onClick={handleJoinRoom}
+              disabled={isJoining}
             >
-              Join Room →
+              {isJoining ? "Joining..." : "Join Room →"}
             </button>
+            {showSlowNotice && (
+              <p className="mt-3 text-center text-sm text-gray-500">
+                Waking up the server — this can take up to a minute on first
+                load.
+              </p>
+            )}
           </div>
         </div>
 
